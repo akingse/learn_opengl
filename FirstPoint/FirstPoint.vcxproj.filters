@@ -28,7 +28,10 @@
       <Filter>com</Filter>
     </ClCompile>
     <ClCompile Include="test_mesh1.cpp">
-      <Filter>com</Filter>
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="test_polyline1.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

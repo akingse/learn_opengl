@@ -2,7 +2,7 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
-
+//立方体
 static void test0()
 {
     const float vertices[] = {
@@ -88,9 +88,10 @@ static void test0()
     return;
 }
 
-
+//四面体
 static void test1()
 {
+    double a = 1e-7;//
     const float vertices[] = {
         // 底面
         0.0f, -0.5f, 0.0f,    // 0
@@ -154,9 +155,11 @@ static void test1()
 
     return;
 }
+
+
 static int enrol = []()
     {
         //test0();
-        test1();
+        //test1();
         return 0;
     }();

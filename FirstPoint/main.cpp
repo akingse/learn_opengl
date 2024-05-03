@@ -24,11 +24,6 @@ void myPoint()
 
 }
 
-void glutDisplayFunc()
-{
-
-}
-
 static void test0()
 {
 	glutInit(NULL, NULL);
@@ -44,7 +39,5 @@ static void test0()
 
 int main(int argc, char* argv[])
 {
-
-
 	return 0;
 }
