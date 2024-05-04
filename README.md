@@ -40,7 +40,5 @@ C:\Users\Aking\source\repos\TPL\glfw\build\src\Debug\
 
 GLAD是一个开源的库，它能解决我们上面提到的那个繁琐的问题。GLAD的配置与大多数的开源库有些许的不同，GLAD使用了一个在线服务。在这里我们能够告诉GLAD需要定义的OpenGL版本，并且根据这个版本加载所有相关的OpenGL函数。
 
-```c++
 
-```
 

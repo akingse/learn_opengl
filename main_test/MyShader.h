@@ -1,14 +1,11 @@
 #pragma once
-class MyShader
-{
-};
 
 #ifndef SHADER_H
 #define SHADER_H
 
 #include <string>
 
-class Shader
+class Shader //ShaderReader
 {
 public:
 	unsigned int ID;//Program ID
@@ -17,6 +14,8 @@ public:
 	const char* vertexSource;
 	const char* fragmentSource;
 public:
+	Shader() = default;
+	Shader(const std::string& vertexPath, const std::string& fragmentPath);
 	Shader(const char* vertexPath, const char* fragmentPath);
 	void use();
 	void setBool(const std::string& name, bool value) const;

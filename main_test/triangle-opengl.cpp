@@ -30,9 +30,11 @@
 #include <GLFW/glfw3.h>
 #include "linmath.h"
 
+#include <string>
 #include <stdlib.h>
 #include <stddef.h>
 #include <stdio.h>
+#include "MyShader.h"
 
 typedef struct Vertex
 {
@@ -107,14 +109,19 @@ int main0(void)
     glGenBuffers(1, &vertex_buffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
+    // read from glsl-file
+    std::string vertexPath = "glsl/vertex_shader_text.glsl";
+    std::string fragmentPath = "glsl/fragment_shader_text.glsl";
+    Shader shader_reader(vertexPath, fragmentPath);
     //vertex shader
     const GLuint vertex_shader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertex_shader, 1, &vertex_shader_text, NULL);
+    //glShaderSource(vertex_shader, 1, &vertex_shader_text, NULL);
+    glShaderSource(vertex_shader, 1, &shader_reader.vertexSource, NULL);
     glCompileShader(vertex_shader);
     //fragment shader
     const GLuint fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragment_shader, 1, &fragment_shader_text, NULL);
+    //glShaderSource(fragment_shader, 1, &fragment_shader_text, NULL);
+    glShaderSource(fragment_shader, 1, &shader_reader.fragmentSource, NULL);
     glCompileShader(fragment_shader);
     //program 创建着色器程序
     const GLuint program = glCreateProgram();
