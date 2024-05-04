@@ -26,7 +26,8 @@ GLFW提供了创建窗口，创建OpenGL上下文，管理键盘和鼠标的事�
 
 ```shell
 #head
-C:\Users\Aking\source\repos\TPL\glfw\deps;C:\Users\Aking\source\repos\TPL\glfw\include;
+C:\Users\Aking\source\repos\TPL\glfw\deps;
+C:\Users\Aking\source\repos\TPL\glfw\include;
 C:\Users\Aking\source\repos\TPL\glad\include
 #lib
 ..\src\Debug\glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib
@@ -38,4 +39,8 @@ C:\Users\Aking\source\repos\TPL\glfw\build\src\Debug\
 [GLAD](https://glad.dav1d.de/)
 
 GLAD是一个开源的库，它能解决我们上面提到的那个繁琐的问题。GLAD的配置与大多数的开源库有些许的不同，GLAD使用了一个在线服务。在这里我们能够告诉GLAD需要定义的OpenGL版本，并且根据这个版本加载所有相关的OpenGL函数。
+
+```c++
+
+```
 
