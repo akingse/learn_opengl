@@ -81,7 +81,7 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
         glfwSetWindowShouldClose(window, GLFW_TRUE);
 }
 
-int main0(void)
+int test0(void)
 {
     glfwSetErrorCallback(error_callback);
     //init and window
@@ -171,7 +171,7 @@ int main0(void)
 
 static int enrol = []()
     {
-        main0();
+        //test0();
         return 0;
     }();
 
