@@ -35,6 +35,9 @@
     <ClCompile Include="triangle-opengl.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="learn_opengl_0.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">

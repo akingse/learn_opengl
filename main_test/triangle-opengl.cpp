@@ -30,9 +30,11 @@
 #include <GLFW/glfw3.h>
 #include "linmath.h"
 
+#include <string>
 #include <stdlib.h>
 #include <stddef.h>
 #include <stdio.h>
+#include "MyShader.h"
 
 typedef struct Vertex
 {
@@ -79,17 +81,15 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
         glfwSetWindowShouldClose(window, GLFW_TRUE);
 }
 
-int main0(void)
+int test0(void)
 {
     glfwSetErrorCallback(error_callback);
-
+    //init and window
     if (!glfwInit())
         exit(EXIT_FAILURE);
-
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
     GLFWwindow* window = glfwCreateWindow(640, 480, "OpenGL Triangle", NULL, NULL);
     if (!window)
     {
@@ -98,60 +98,63 @@ int main0(void)
     }
 
     glfwSetKeyCallback(window, key_callback);
-
     glfwMakeContextCurrent(window);
     gladLoadGL(glfwGetProcAddress);
-    glfwSwapInterval(1);
+    glfwSwapInterval(1);//设置垂直同步。
 
     // NOTE: OpenGL error checks have been omitted for brevity
 
+    //crete VBO
     GLuint vertex_buffer;
     glGenBuffers(1, &vertex_buffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
+    // read from glsl-file
+    std::string vertexPath = "glsl/vertex_shader_text.glsl";
+    std::string fragmentPath = "glsl/fragment_shader_text.glsl";
+    Shader shader_reader(vertexPath, fragmentPath);
+    //vertex shader
     const GLuint vertex_shader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertex_shader, 1, &vertex_shader_text, NULL);
+    //glShaderSource(vertex_shader, 1, &vertex_shader_text, NULL);
+    glShaderSource(vertex_shader, 1, &shader_reader.vertexSource, NULL);
     glCompileShader(vertex_shader);
-
+    //fragment shader
     const GLuint fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragment_shader, 1, &fragment_shader_text, NULL);
+    //glShaderSource(fragment_shader, 1, &fragment_shader_text, NULL);
+    glShaderSource(fragment_shader, 1, &shader_reader.fragmentSource, NULL);
     glCompileShader(fragment_shader);
-
+    //program 创建着色器程序
     const GLuint program = glCreateProgram();
     glAttachShader(program, vertex_shader);
     glAttachShader(program, fragment_shader);
     glLinkProgram(program);
-
+    //获取uniform 和 attribute 变量的位置
+    //int mvp_location;
     const GLint mvp_location = glGetUniformLocation(program, "MVP");
     const GLint vpos_location = glGetAttribLocation(program, "vPos");
     const GLint vcol_location = glGetAttribLocation(program, "vCol");
-
+    //绑定VAO
     GLuint vertex_array;
-    glGenVertexArrays(1, &vertex_array);
+    glGenVertexArrays(1, &vertex_array);//VAO
     glBindVertexArray(vertex_array);
     glEnableVertexAttribArray(vpos_location);
-    glVertexAttribPointer(vpos_location, 2, GL_FLOAT, GL_FALSE,
-                          sizeof(Vertex), (void*) offsetof(Vertex, pos));
+    glVertexAttribPointer(vpos_location, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, pos));
     glEnableVertexAttribArray(vcol_location);
-    glVertexAttribPointer(vcol_location, 3, GL_FLOAT, GL_FALSE,
-                          sizeof(Vertex), (void*) offsetof(Vertex, col));
+    glVertexAttribPointer(vcol_location, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, col));
 
     while (!glfwWindowShouldClose(window))
     {
         int width, height;
         glfwGetFramebufferSize(window, &width, &height);
         const float ratio = width / (float) height;
-
         glViewport(0, 0, width, height);
         glClear(GL_COLOR_BUFFER_BIT);
-
+        //创建MVP矩阵
         mat4x4 m, p, mvp;
         mat4x4_identity(m);
         mat4x4_rotate_Z(m, m, (float) glfwGetTime());
-        mat4x4_ortho(p, -ratio, ratio, -1.f, 1.f, 1.f, -1.f);
+        mat4x4_ortho(p, -ratio, ratio, -1.f, 1.f, 1.f, -1.f);//正交投影
         mat4x4_mul(mvp, p, m);
-
         glUseProgram(program);
         glUniformMatrix4fv(mvp_location, 1, GL_FALSE, (const GLfloat*) &mvp);
         glBindVertexArray(vertex_array);
@@ -162,14 +165,13 @@ int main0(void)
     }
 
     glfwDestroyWindow(window);
-
     glfwTerminate();
     exit(EXIT_SUCCESS);
 }
 
 static int enrol = []()
     {
-        main0();
+        //test0();
         return 0;
     }();
 
