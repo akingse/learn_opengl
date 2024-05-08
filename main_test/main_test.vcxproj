@@ -71,7 +71,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\Aking\source\repos\TPL\glfw\deps;C:\Users\Aking\source\repos\TPL\glfw\include;C:\Users\Aking\source\repos\TPL\glad\include;%(AdditionalIncludeDirectories);$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\Aking\source\repos\TPL\glfw\deps;C:\Users\Aking\source\repos\TPL\glfw\include;C:\Users\Aking\source\repos\TPL\glad\include;%(AdditionalIncludeDirectories);..\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\Aking\source\repos\TPL\glfw\build\src\Debug\;..\src\Debug\glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -152,7 +152,21 @@
     <ClInclude Include="ObjLoader.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\nupengl.core.redist.0.1.0.1\build\native\nupengl.core.redist.targets" Condition="Exists('..\packages\nupengl.core.redist.0.1.0.1\build\native\nupengl.core.redist.targets')" />
+    <Import Project="..\packages\nupengl.core.0.1.0.1\build\native\nupengl.core.targets" Condition="Exists('..\packages\nupengl.core.0.1.0.1\build\native\nupengl.core.targets')" />
+    <Import Project="..\packages\glfw.3.4.0\build\native\glfw.targets" Condition="Exists('..\packages\glfw.3.4.0\build\native\glfw.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\nupengl.core.redist.0.1.0.1\build\native\nupengl.core.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\nupengl.core.redist.0.1.0.1\build\native\nupengl.core.redist.targets'))" />
+    <Error Condition="!Exists('..\packages\nupengl.core.0.1.0.1\build\native\nupengl.core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\nupengl.core.0.1.0.1\build\native\nupengl.core.targets'))" />
+    <Error Condition="!Exists('..\packages\glfw.3.4.0\build\native\glfw.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glfw.3.4.0\build\native\glfw.targets'))" />
+  </Target>
 </Project>

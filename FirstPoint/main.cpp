@@ -1,4 +1,8 @@
 #include <GL/glut.h>
+//using Nuget
+// 项目右键-管理NuGet程序包
+// nupengl.core
+
 
 void init()
 {
