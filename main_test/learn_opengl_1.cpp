@@ -109,9 +109,15 @@ static const char* fragmentShaderSource =
 "    FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);} \n";
 
 float vertices[] = {
-     0.5f,  -0.5f, 0.0f, 
      0.0f,  0.5f, 0.0f,
+     0.5f,  -0.5f, 0.0f, 
      -0.5f, -0.5f, 0.0f, 
+     0.0f,  -1.5f, 0.0f,
+};
+
+unsigned int indices[] = {  // note that we start from 0!
+    0, 1, 2,  // first Triangle
+    1, 2, 3   // second Triangle
 };
 
 static void error_callback(int error, const char* description)
@@ -119,9 +125,15 @@ static void error_callback(int error, const char* description)
     fprintf(stderr, "Error: %s\n", description);
 }
 
+static void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+    glViewport(0, 0, width, height);
+}
+
+//入门-你好三角形
 static void test0()
 {
-    glfwSetErrorCallback(error_callback);
+    //glfwSetErrorCallback(error_callback);
     if (!glfwInit())
         exit(EXIT_FAILURE);
 
@@ -135,6 +147,7 @@ static void test0()
         exit(EXIT_FAILURE);
     }
     glfwMakeContextCurrent(window);
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);//调用glViewport函数来设置窗口的维度
     gladLoadGL(glfwGetProcAddress);
     glfwSwapInterval(1);//设置垂直同步。
 
@@ -142,6 +155,12 @@ static void test0()
     GLuint VAO;
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
+
+    //create EBO
+    GLuint EBO;
+    glGenBuffers(1, &EBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);//开辟显存空间，初始化数据
 
     //create VBO
     GLuint VBO;
@@ -154,8 +173,8 @@ static void test0()
     //创建顶点着色器
     unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
     //将顶点着色器附着在着色器对象上
-    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-    glCompileShader(vertexShader);
+    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);//end sign
+    glCompileShader(vertexShader); //着色器输出会链接到下一个的输入
     //创建片段着色器
     unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     //将片段着色器附着在着色器对象上
@@ -189,29 +208,56 @@ static void test0()
     }
     glDeleteShader(vertexShader);//回收好习惯
     glDeleteShader(fragmentShader); 
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //change context
+    glBindVertexArray(0);//解绑
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
     while (!glfwWindowShouldClose(window))
     {
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f); //设置颜色
+        glClear(GL_COLOR_BUFFER_BIT); //清空缓存
         glUseProgram(program);
-        glBindVertexArray(VBO);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glBindVertexArray(VAO);
+        //glDrawArrays(GL_TRIANGLES, 0, 3); //first, count
+        //glDrawArrays(GL_TRIANGLES, 1, 4); //first, count
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
-
-    //释放内存
+	//释放内存
+	glDeleteVertexArrays(1, &VAO);
+	glDeleteBuffers(1, &VBO);
+	glDeleteBuffers(1, &EBO);
+	glDeleteProgram(program);
 
 }
 
+//入门-着色器
 static void test1()
 {
+    glfwInit();
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    GLFWwindow* window = glfwCreateWindow(640, 480, "LearnOpenGL", NULL, NULL);
+    if (window == NULL)
+        return;
+    glfwMakeContextCurrent(window);
+    gladLoadGL(glfwGetProcAddress);
 
 
+    int nrAttributes; //default 16
+    glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
+    std::cout << "Maximum nr of vertex attributes supported: " << nrAttributes << std::endl;
+
+
+    return;
 }
 
 static int enrol = []()
     {
-        test0();
-        //test1();
+        //test0();
+        test1();
         return 0;
     }();

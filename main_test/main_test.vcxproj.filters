@@ -12,6 +12,9 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="glsl">
+      <UniqueIdentifier>{2a476512-3696-4df5-92ba-d86b5af3bd5e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -52,5 +55,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="glsl\fragment_shader_text.glsl">
+      <Filter>glsl</Filter>
+    </None>
+    <None Include="glsl\vertex_shader_text.glsl">
+      <Filter>glsl</Filter>
+    </None>
   </ItemGroup>
 </Project>
