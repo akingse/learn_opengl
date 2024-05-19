@@ -425,7 +425,6 @@ static void test2()
 }
 
 //使用封装的Shader类
-#include"LearnShader.h"
 static void test3()
 {
     glfwInit();

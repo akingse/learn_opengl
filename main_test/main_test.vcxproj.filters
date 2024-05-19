@@ -35,10 +35,13 @@
     <ClCompile Include="learn_opengl_triangle.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="LearnShader.cpp">
+    <ClCompile Include="Shader.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="learn_opengl_texture.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="learn_opengl_light.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -49,10 +52,13 @@
     <ClInclude Include="ObjLoader.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="LearnShader.h">
+    <ClInclude Include="Shader.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="commonFunction.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

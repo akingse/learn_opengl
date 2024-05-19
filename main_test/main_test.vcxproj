@@ -136,7 +136,8 @@
     <ClCompile Include="glad.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="LearnShader.cpp" />
+    <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="learn_opengl_light.cpp" />
     <ClCompile Include="learn_opengl_texture.cpp" />
     <ClCompile Include="learn_opengl_triangle.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
@@ -151,8 +152,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="commonFunction.h" />
-    <ClInclude Include="LearnShader.h" />
+    <ClInclude Include="Shader.h" />
     <ClInclude Include="ObjLoader.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
