@@ -136,6 +136,7 @@
     <ClCompile Include="glad.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="LearnShader.cpp" />
     <ClCompile Include="learn_opengl_0.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -155,13 +156,17 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="commonFunction.h" />
+    <ClInclude Include="LearnShader.h" />
     <ClInclude Include="MyShader.h" />
     <ClInclude Include="ObjLoader.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="glsl\fragment_shader_text.glsl" />
-    <None Include="glsl\vertex_shader_text.glsl" />
+    <None Include="glsl\shader_gradient_fragment.glsl" />
+    <None Include="glsl\shader_gradient_vertex.glsl" />
+    <None Include="glsl\shader_uniform_fragment.glsl" />
+    <None Include="glsl\shader_uniform_vertex.glsl" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -3,6 +3,7 @@
 #include<stdlib.h>
 #include <math.h>
 #include <iostream>
+#include "commonFunction.h"
 
 /*
 include
@@ -13,10 +14,7 @@ library
 C:\Users\Aking\source\repos\TPL\glfw\build\src\Debug\
 C:\Users\Aking\source\repos\TPL\glfw\build\src\$(Configuration)
 */
-#include <glad/gl.h>
-#define GLFW_INCLUDE_NONE
-#include <GLFW/glfw3.h>
-#include "linmath.h"
+
 #pragma comment (lib, "opengl32.lib")
 #pragma comment (lib, "glfw3.lib")
 
@@ -96,43 +94,50 @@ shader内置变量：
 
 
 */
-static const char* vertexShaderSource =
-"#version 330 core\n"
-"layout (location = 0) in vec3 aPos;\n"
-"void main(){\n"
-"    gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);}\n";
-
-static const char* fragmentShaderSource =
-"#version 330 core\n"
-"out vec4 FragColor;\n"
-"void main(){\n"
-"    FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);} \n";
-
-float vertices[] = {
-     0.0f,  0.5f, 0.0f,
-     0.5f,  -0.5f, 0.0f, 
-     -0.5f, -0.5f, 0.0f, 
-     0.0f,  -1.5f, 0.0f,
-};
-
-unsigned int indices[] = {  // note that we start from 0!
-    0, 1, 2,  // first Triangle
-    1, 2, 3   // second Triangle
-};
 
 static void error_callback(int error, const char* description)
 {
     fprintf(stderr, "Error: %s\n", description);
 }
 
-static void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-{
-    glViewport(0, 0, width, height);
-}
+//static void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+//{
+//    glViewport(0, 0, width, height);
+//}
+//
+//static void processInput(GLFWwindow* window)
+//{
+//    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+//        glfwSetWindowShouldClose(window, true);
+//}
 
 //入门-你好三角形
 static void test0()
 {
+    const char* vertexShaderSource =
+        "#version 330 core\n"
+        "layout (location = 0) in vec3 aPos;\n"
+        "void main(){\n"
+        "    gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);}\n";
+
+    const char* fragmentShaderSource =
+        "#version 330 core\n"
+        "out vec4 FragColor;\n"
+        "void main(){\n"
+        "    FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);} \n";
+
+    float vertices[] = {
+         0.0f,  0.5f, 0.0f,
+         0.5f,  -0.5f, 0.0f,
+         -0.5f, -0.5f, 0.0f,
+         0.0f,  -1.5f, 0.0f,
+    };
+
+    unsigned int indices[] = {  // note that we start from 0!
+        0, 1, 2,  // first Triangle
+        1, 2, 3   // second Triangle
+    };
+
     //glfwSetErrorCallback(error_callback);
     if (!glfwInit())
         exit(EXIT_FAILURE);
@@ -148,7 +153,7 @@ static void test0()
     }
     glfwMakeContextCurrent(window);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);//调用glViewport函数来设置窗口的维度
-    gladLoadGL(glfwGetProcAddress);
+    gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
     glfwSwapInterval(1);//设置垂直同步。
 
     //create VAO
@@ -233,7 +238,7 @@ static void test0()
 
 }
 
-//入门-着色器
+//入门-着色器 //using uniform
 static void test1()
 {
     glfwInit();
@@ -244,14 +249,178 @@ static void test1()
     if (window == NULL)
         return;
     glfwMakeContextCurrent(window);
-    gladLoadGL(glfwGetProcAddress);
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback); 
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+        return;
+    
+    //创建顶点着色器
+    GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+    const char* vertexShaderSource = gl_read_string("glsl/shader_uniform_vertex.glsl");
+    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);//end sign
+    glCompileShader(vertexShader); //着色器输出会链接到下一个的输入
+    //创建片段着色器
+    GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+    const char* fragmentShaderSource = gl_read_string("glsl/shader_uniform_fragment.glsl");
+    glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
+    glCompileShader(fragmentShader);
 
+    //创建着色器程序
+    const GLuint shaderProgram = glCreateProgram();
+    glAttachShader(shaderProgram, vertexShader);
+    glAttachShader(shaderProgram, fragmentShader);
+    glLinkProgram(shaderProgram);//将渲染管线串联起来
+    //glGetProgramiv(shaderProgram, GL_LINK_STATUS, NULL);//iv=函数返回的是一个或多个 GLint 类型的整数值
+    glDeleteShader(vertexShader);
+    glDeleteShader(fragmentShader);
+
+    float vertices[] = {
+         0.5f, -0.5f, 0.0f,  // bottom right
+        -0.5f, -0.5f, 0.0f,  // bottom left
+         0.0f,  0.5f, 0.0f   // top 
+    };
+
+    GLuint VBO, VAO;
+    //VAO保存一个或多个顶点属性的状态,以及相关的顶点缓冲区对象。
+    //VBO是一种OpenGL缓冲区对象,用于存储和管理顶点数据。
+    glGenVertexArrays(1, &VAO); //第一个1是size,跟VAO的值1没关系
+    glGenBuffers(1, &VBO);
+    glBindVertexArray(VAO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+    glBindVertexArray(VAO);
+
+    while (!glfwWindowShouldClose(window))
+    {
+        // 输入
+        processInput(window);
+        // 清除颜色缓冲
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+        glUseProgram(shaderProgram);
+
+        // 更新uniform颜色
+        float timeValue = glfwGetTime();
+        float greenValue = sin(timeValue) / 2.0f + 0.5f;
+        int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
+        glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
+
+        // 绘制三角形
+        //glBindVertexArray(VAO);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+        // 交换缓冲并查询IO事件
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
+    glDeleteVertexArrays(1, &VAO);
+    glDeleteBuffers(1, &VBO);
+    glDeleteProgram(shaderProgram);
+    glfwTerminate();
+    return;
+}
+
+//入门-着色器 //渐变色
+static void test2()
+{
+    glfwInit();
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    GLFWwindow* window = glfwCreateWindow(640, 480, "LearnOpenGL", NULL, NULL);
+    if (window == NULL)
+        return;
+    glfwMakeContextCurrent(window);
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+        return;
 
     int nrAttributes; //default 16
     glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
     std::cout << "Maximum nr of vertex attributes supported: " << nrAttributes << std::endl;
 
+    //创建顶点着色器
+    GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+    const char* vertexShaderSource = gl_read_string("glsl/shader_gradient_vertex.glsl");
+    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);//end sign
+    glCompileShader(vertexShader); //着色器输出会链接到下一个的输入
+    //创建片段着色器
+    GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+    const char* fragmentShaderSource = gl_read_string("glsl/shader_gradient_fragment.glsl");
+    glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
+    glCompileShader(fragmentShader);
 
+    //创建着色器程序
+    const GLuint shaderProgram = glCreateProgram();
+    glAttachShader(shaderProgram, vertexShader);
+    glAttachShader(shaderProgram, fragmentShader);
+    glLinkProgram(shaderProgram);//将渲染管线串联起来
+    //glGetProgramiv(shaderProgram, GL_LINK_STATUS, NULL);
+    glDeleteShader(vertexShader);
+    glDeleteShader(fragmentShader);
+
+    float vertices[] = {
+        // positions         // colors
+         0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,  // bottom right
+        -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,  // bottom left
+         0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f   // top 
+    };
+
+    GLuint VBO, VAO;
+    //VAO保存一个或多个顶点属性的状态,以及相关的顶点缓冲区对象。
+    //VBO是一种OpenGL缓冲区对象,用于存储和管理顶点数据。
+    glGenVertexArrays(1, &VAO); //第一个1是size,跟VAO的值1没关系
+    glGenBuffers(1, &VBO);
+    glBindVertexArray(VAO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    auto a0 = (void*)0;
+    auto a1 = (void*)1;
+
+    // position attribute
+    //(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void *pointer)
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);//如何从当前绑定的顶点缓冲区(VBO)中解释顶点数据。
+    /*
+    0 是顶点属性的位置值(location)。这里我们设置位置0的属性。对应glsl中layout (location = 0)
+    3 是每个顶点属性的组件数量，在这里是3个(x, y, z)。
+    GL_FLOAT 指定数据类型为浮点型。
+    GL_FALSE 表示数据不应该被归一化。
+    6 * sizeof(float) 是顶点数据的步长，即一个顶点数据所占的字节数。这里每个顶点包含6个float值(3个位置 + 3个颜色)。
+    (void*)0 是位置属性在顶点数据中的起始偏移量，这里是0，因为位置属性是在最前面。
+    */
+    glEnableVertexAttribArray(0);//启用顶点属性数组 0，即位置属性。
+    // color attribute
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1); //启用顶点属性数组 1，即颜色属性。
+    glUseProgram(shaderProgram);
+
+    while (!glfwWindowShouldClose(window))
+    {
+        // 输入
+        processInput(window);
+        // 清除颜色缓冲
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        // 更新uniform颜色
+        float timeValue = glfwGetTime();
+        float greenValue = sin(timeValue) / 2.0f + 0.5f;
+        int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
+        glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
+
+        // 绘制三角形
+        glBindVertexArray(VAO);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+        // 交换缓冲并查询IO事件
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
+    glDeleteVertexArrays(1, &VAO);
+    glDeleteBuffers(1, &VBO);
+    glDeleteProgram(shaderProgram);
+    glfwTerminate();
     return;
 }
 
@@ -259,5 +428,6 @@ static int enrol = []()
     {
         //test0();
         test1();
+        //test2();
         return 0;
     }();

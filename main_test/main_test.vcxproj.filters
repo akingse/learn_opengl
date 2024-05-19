@@ -41,6 +41,9 @@
     <ClCompile Include="learn_opengl_0.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="LearnShader.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -52,13 +55,25 @@
     <ClInclude Include="ObjLoader.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="LearnShader.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="commonFunction.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="glsl\fragment_shader_text.glsl">
+    <None Include="glsl\shader_gradient_fragment.glsl">
       <Filter>glsl</Filter>
     </None>
-    <None Include="glsl\vertex_shader_text.glsl">
+    <None Include="glsl\shader_gradient_vertex.glsl">
+      <Filter>glsl</Filter>
+    </None>
+    <None Include="glsl\shader_uniform_fragment.glsl">
+      <Filter>glsl</Filter>
+    </None>
+    <None Include="glsl\shader_uniform_vertex.glsl">
       <Filter>glsl</Filter>
     </None>
   </ItemGroup>
