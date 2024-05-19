@@ -38,6 +38,9 @@
     <ClCompile Include="LearnShader.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="learn_opengl_texture.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -65,6 +68,12 @@
       <Filter>glsl</Filter>
     </None>
     <None Include="glsl\shader_uniform_vertex.glsl">
+      <Filter>glsl</Filter>
+    </None>
+    <None Include="glsl\texture.fs">
+      <Filter>glsl</Filter>
+    </None>
+    <None Include="glsl\texture.vs">
       <Filter>glsl</Filter>
     </None>
   </ItemGroup>

@@ -137,6 +137,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="LearnShader.cpp" />
+    <ClCompile Include="learn_opengl_texture.cpp" />
     <ClCompile Include="learn_opengl_triangle.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -160,6 +161,8 @@
     <None Include="glsl\shader_gradient_vertex.glsl" />
     <None Include="glsl\shader_uniform_fragment.glsl" />
     <None Include="glsl\shader_uniform_vertex.glsl" />
+    <None Include="glsl\texture.fs" />
+    <None Include="glsl\texture.vs" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

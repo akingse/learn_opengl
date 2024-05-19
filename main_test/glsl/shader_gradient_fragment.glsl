@@ -6,3 +6,4 @@ void main() //计算每个像素的最终颜色
 {
    FragColor = vec4(ourColor, 1.0f);
 }
+

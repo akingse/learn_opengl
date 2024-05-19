@@ -12,6 +12,9 @@
 
 #include <glm/glm.hpp>
 //using namespace glm;
+#include "commonFunction.h"
+#include"LearnShader.h"
+
 
 //#define GLAD_GL_IMPLEMENTATION
 //#include <glad/gl.h>
