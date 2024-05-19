@@ -26,19 +26,13 @@
     <ClCompile Include="glad.c">
       <Filter>com</Filter>
     </ClCompile>
-    <ClCompile Include="learn_opengl_1.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="MyShader.cpp">
+    <ClCompile Include="learn_opengl_color.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="ObjLoader.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="triangle-opengl.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="learn_opengl_0.cpp">
+    <ClCompile Include="learn_opengl_triangle.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="LearnShader.cpp">
@@ -48,9 +42,6 @@
   <ItemGroup>
     <ClInclude Include="pch.h">
       <Filter>com</Filter>
-    </ClInclude>
-    <ClInclude Include="MyShader.h">
-      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="ObjLoader.h">
       <Filter>src</Filter>

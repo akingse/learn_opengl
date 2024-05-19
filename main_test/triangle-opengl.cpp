@@ -34,7 +34,8 @@
 #include <stdlib.h>
 #include <stddef.h>
 #include <stdio.h>
-#include "MyShader.h"
+#include"LearnShader.h"
+//#include "MyShader.h"
 
 typedef struct Vertex
 {
@@ -116,12 +117,12 @@ int test0(void)
     //vertex shader
     const GLuint vertex_shader = glCreateShader(GL_VERTEX_SHADER);
     //glShaderSource(vertex_shader, 1, &vertex_shader_text, NULL);
-    glShaderSource(vertex_shader, 1, &shader_reader.vertexSource, NULL);
+    //glShaderSource(vertex_shader, 1, &shader_reader.vertexSource, NULL);
     glCompileShader(vertex_shader);
     //fragment shader
     const GLuint fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
     //glShaderSource(fragment_shader, 1, &fragment_shader_text, NULL);
-    glShaderSource(fragment_shader, 1, &shader_reader.fragmentSource, NULL);
+    //glShaderSource(fragment_shader, 1, &shader_reader.fragmentSource, NULL);
     glCompileShader(fragment_shader);
     //program 创建着色器程序
     const GLuint program = glCreateProgram();

@@ -47,6 +47,7 @@ public:
         }
         const char* vShaderCode = vertexCode.c_str();
         const char* fShaderCode = fragmentCode.c_str();
+
         // 2. compile shaders
         unsigned int vertex, fragment;
         // vertex shader
@@ -71,6 +72,10 @@ public:
     }
     // activate the shader
     // ------------------------------------------------------------------------
+    Shader(const std::string& vertexPath, const  std::string& fragmentPath)
+    {
+        Shader(vertexPath.c_str(), fragmentPath.c_str());
+    }
     void use()
     {
         glUseProgram(ID);
@@ -90,6 +95,10 @@ public:
     void setFloat(const std::string& name, float value) const
     {
         glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
+    }
+    void setVec4f(const std::string& name, float x, float y, float z, float w) const
+    {
+		glUniform4f(glGetUniformLocation(ID, name.c_str()), x, y, z, w);
     }
 
 private:
