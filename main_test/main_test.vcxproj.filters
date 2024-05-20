@@ -15,6 +15,9 @@
     <Filter Include="glsl">
       <UniqueIdentifier>{2a476512-3696-4df5-92ba-d86b5af3bd5e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="light">
+      <UniqueIdentifier>{9162de4d-035c-4567-b180-44d0a8518ce6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -43,6 +46,9 @@
     </ClCompile>
     <ClCompile Include="learn_opengl_light.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="learn_light_color.cpp">
+      <Filter>light</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

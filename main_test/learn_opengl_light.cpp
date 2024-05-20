@@ -322,7 +322,7 @@ unsigned int loadTexture(char const* path)
 
 static int enrol = []()
     {
-        main0();
+        //main0();
         //main1();
         return 0;
     }();

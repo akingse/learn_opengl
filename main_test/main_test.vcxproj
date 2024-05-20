@@ -136,6 +136,7 @@
     <ClCompile Include="glad.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="learn_light_color.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="learn_opengl_light.cpp" />
     <ClCompile Include="learn_opengl_texture.cpp" />
