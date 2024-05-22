@@ -8,15 +8,27 @@
     <Filter Include="com">
       <UniqueIdentifier>{6f9b48cd-3c2d-4d9e-bfce-94878361c154}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
     <Filter Include="glsl">
       <UniqueIdentifier>{2a476512-3696-4df5-92ba-d86b5af3bd5e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="light">
+    <Filter Include="start">
+      <UniqueIdentifier>{ab2ed83c-0402-425d-9000-d04760292f33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lighting">
       <UniqueIdentifier>{9162de4d-035c-4567-b180-44d0a8518ce6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="model">
+      <UniqueIdentifier>{59a5c75d-1ca1-4841-b16e-a82475ef4a74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="advanced">
+      <UniqueIdentifier>{e7298bde-e10e-4564-b1a0-e8e005e3f0ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PBR">
+      <UniqueIdentifier>{43fb3d21-ecda-42bd-a2e6-874050f7db3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="util">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -29,26 +41,26 @@
     <ClCompile Include="glad.c">
       <Filter>com</Filter>
     </ClCompile>
-    <ClCompile Include="learn_opengl_color.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="ObjLoader.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="learn_opengl_triangle.cpp">
-      <Filter>src</Filter>
+      <Filter>util</Filter>
     </ClCompile>
     <ClCompile Include="Shader.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="learn_opengl_texture.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="learn_opengl_light.cpp">
-      <Filter>src</Filter>
+      <Filter>util</Filter>
     </ClCompile>
     <ClCompile Include="learn_light_color.cpp">
-      <Filter>light</Filter>
+      <Filter>lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="learn_opengl_color.cpp">
+      <Filter>start</Filter>
+    </ClCompile>
+    <ClCompile Include="learn_opengl_texture.cpp">
+      <Filter>start</Filter>
+    </ClCompile>
+    <ClCompile Include="learn_opengl_triangle.cpp">
+      <Filter>start</Filter>
+    </ClCompile>
+    <ClCompile Include="learn_opengl_light.cpp">
+      <Filter>lighting</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -56,16 +68,16 @@
       <Filter>com</Filter>
     </ClInclude>
     <ClInclude Include="ObjLoader.h">
-      <Filter>src</Filter>
+      <Filter>util</Filter>
     </ClInclude>
     <ClInclude Include="Shader.h">
-      <Filter>src</Filter>
+      <Filter>util</Filter>
     </ClInclude>
     <ClInclude Include="commonFunction.h">
-      <Filter>src</Filter>
+      <Filter>util</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>src</Filter>
+      <Filter>util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
